@@ -84,13 +84,7 @@ function RaiseTicketDialogbox({ open, setOpen }: RaiseTicketDialogboxProps) {
     }
   }
   return (
-    <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
-      style={{
-        minWidth: 'fit-content'
-      }}
-    >
+    <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth='md'>
       <DialogTitle>Ticket Details</DialogTitle>
 
       <form onSubmit={handleCreateTicket}>
