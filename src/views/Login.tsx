@@ -63,7 +63,7 @@ const Login = ({ mode }: { mode: Mode }) => {
       const password = formData.get('Password') as string
       await auth.signin(email, password)
 
-      router.replace('/')
+      router.push('/')
     } catch (error) {
       console.error(error)
       setErrorDialogOpen(true)
