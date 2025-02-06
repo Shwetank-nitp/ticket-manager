@@ -33,11 +33,13 @@ import { useImageVariant } from '@core/hooks/useImageVariant'
 
 // services Imports
 import { auth } from '@/@services/FirebaseAuthentication/auth'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 
 const Login = ({ mode }: { mode: Mode }) => {
   // States
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false)
   // Vars
   const darkImg = '/images/pages/auth-v1-mask-dark.png'
   const lightImg = '/images/pages/auth-v1-mask-light.png'
@@ -61,9 +63,10 @@ const Login = ({ mode }: { mode: Mode }) => {
       const password = formData.get('Password') as string
       await auth.signin(email, password)
 
-      router.push('/')
+      router.replace('/')
     } catch (error) {
-      alert('error occured check conole')
+      console.error(error)
+      setErrorDialogOpen(true)
     } finally {
       setLoading(false)
     }
@@ -134,6 +137,17 @@ const Login = ({ mode }: { mode: Mode }) => {
           </div>
         </CardContent>
       </Card>
+      <Dialog open={errorDialogOpen} onClose={() => setErrorDialogOpen(false)}>
+        <DialogTitle>Error</DialogTitle>
+        <DialogContent>
+          <DialogContentText>The email or password you entered is incorrect. Please try again.</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setErrorDialogOpen(false)} color='primary'>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Illustrations maskImg={{ src: authBackground }} />
     </div>
   )
